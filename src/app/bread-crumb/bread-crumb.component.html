@@ -1,0 +1,128 @@
+<mat-card style="min-width: 500px">
+  <mat-card-header>
+    <mat-card-title> Select File </mat-card-title>
+    <mat-card-subtitle>by Construxiv</mat-card-subtitle>
+    <div style="flex-grow: 1"></div>
+    <button mat-icon-button>
+      <mat-icon>cached</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <mat-icon>search</mat-icon>
+
+      <mat-form-field style="padding: 0 10px; width: 60%">
+        <input />
+        <span
+          ><label><mat-label>Search</mat-label></label>
+        </span>
+      </mat-form-field>
+    </div>
+
+    <!-- this is bread-crumb  -->
+    <!-- <div
+      style="line-height: 24px; margin: 10px 0 30px 30px; position: relative"
+    >
+      <mat-icon
+        svgIcon="right"
+        style="width: 16px; height: 14px; margin-left: 8px"
+      ></mat-icon>
+      <div
+        class="relativepath"
+        style="cursor: pointer; position: absolute; top: 0px; left: 35px"
+      >
+        <span
+          *ngFor="let item of lstShowPath; let i = index"
+          (click)="updateRecentlyPath(i)"
+          ><span
+            class="text"
+            [ngClass]="i === lstShowPath.length - 1 ? '' : 'path'"
+            >{{ i === 0 ? "Root" : item }}</span
+          ><span
+            class="sub-text"
+            *ngIf="i !== lstShowPath.length - 1"
+            style="color: rgb(108, 119, 130)"
+          >
+            /
+          </span></span
+        >
+      </div>
+    </div> -->
+    <!-- this is bread-crumb  -->
+
+    <!-- this is colum  -->
+    <div style="display: flex; flex-grow: inherit; padding: 0 16px">
+      <div class="content">
+        <div class="main-content">
+          <span class="context" #context>Name</span>
+          <div class="cached-date">
+            <span>Create Date</span>
+          </div>
+          <div class="right-size">
+            <span>Size</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- this is colum  -->
+
+    <mat-list>
+      <cdk-virtual-scroll-viewport>
+        <mat-list-item
+          [ngStyle]="inSearchMode ? { height: 'auto' } : {}"
+            *cdkVirtualFor="
+              let item of listItems;
+              let i = index;
+              trackBy: trackByList
+            "
+            (click)="
+              item.isDirectory
+                ? inSearchMode
+                  ? goToFolderInSearchMode(
+                      item.originalFilePath + '/' + item.name
+                    )
+                  : choosePath(item.filename)
+                : null
+            "
+        >
+          <div class="content">
+            <div class="main-content" (click)="onChange(item)">
+              <span class="context">
+
+                <span class="filename" #filename>{{ item.filename }}</span>
+
+                <span class="path" *ngIf="inSearchMode">{{
+                  item.originalFilePath.length > 35
+                    ? (item.originalFilePath | handleLongOriginalPath)
+                    : item.originalFilePath
+                }}</span>
+              </span>
+
+              <div class="cached-date">
+                <span>{{
+                  !item.isDirectory && item.cacheStatus === 2
+                    ? (item.createdDate | formatTimeAgo)
+                    : ""
+                }}</span>
+              </div>
+
+              <div class="right-size">
+                <span>{{item?.status?.size | convertBytes}}</span>
+              </div>
+
+              <div class="main-content-cache status-contain">
+                <mat-progress-spinner
+                  *ngIf="item.showloading"
+                  mode="indeterminate"
+                  diameter="40"
+                >
+                </mat-progress-spinner>
+              </div>
+            </div>
+          </div>
+        </mat-list-item>
+      </cdk-virtual-scroll-viewport>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

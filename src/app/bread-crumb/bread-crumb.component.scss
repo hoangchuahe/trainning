@@ -1,0 +1,35 @@
+.content{
+  display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+}
+.main-content{
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.context{
+  min-width: 150px;
+  flex: 1 1 auto;
+}
+.cached-date{
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.right-size{
+  width: 80px;
+  margin-left: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
